@@ -23,11 +23,24 @@ namespace HelloWorld
         public MainWindow()
         {
             InitializeComponent();
+            uxSubmit.IsEnabled = false;
         }
 
         private void uxSubmit_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Submitting password:" + uxPassword.Text);
+        }
+
+        private void uxNamePassword_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(uxName.Text)|| String.IsNullOrWhiteSpace(uxPassword.Text))
+            {
+                uxSubmit.IsEnabled = false;
+            }
+            else
+            {
+                uxSubmit.IsEnabled = true;
+            }
         }
     }
 }
