@@ -15,11 +15,12 @@ namespace InventoryDB
     public partial class Product
     {
         public int ProductId { get; set; }
+        public string ProductName { get; set; }
         public int ProductNumber { get; set; }
         public string ProductDescription { get; set; }
         public double PricePerItem { get; set; }
         public int AvailableQuantity { get; set; }
-        public double CostPerItem { get; set; }
         public double ValueOfItem { get; set; }
+        public double CostPerItem { get; set; }
     }
 }

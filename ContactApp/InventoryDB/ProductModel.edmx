@@ -10,6 +10,7 @@
             <PropertyRef Name="ProductId" />
           </Key>
           <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ProductNumber" Type="int" Nullable="false" />
           <Property Name="ProductDescription" Type="nvarchar" MaxLength="50" />
           <Property Name="PricePerItem" Type="float" Nullable="false" />
@@ -29,12 +30,13 @@
             <PropertyRef Name="ProductId" />
           </Key>
           <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ProductNumber" Type="Int32" Nullable="false" />
           <Property Name="ProductDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PricePerItem" Type="Double" Nullable="false" />
           <Property Name="AvailableQuantity" Type="Int32" Nullable="false" />
-          <Property Name="CostPerItem" Type="Double" Nullable="false" />
           <Property Name="ValueOfItem" Type="Double" Nullable="false" />
+          <Property Name="CostPerItem" Type="Double" Nullable="false" />
         </EntityType>
         <EntityContainer Name="InventoryEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Products" EntityType="Self.Product" />
@@ -48,13 +50,14 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="InventoryModel.Product">
               <MappingFragment StoreEntitySet="Product">
-                <ScalarProperty Name="ValueOfItem" ColumnName="ValueOfItem" />
+                <ScalarProperty Name="CostPerItem" ColumnName="CostPerItem" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="ProductNumber" ColumnName="ProductNumber" />
                 <ScalarProperty Name="ProductDescription" ColumnName="ProductDescription" />
                 <ScalarProperty Name="PricePerItem" ColumnName="PricePerItem" />
                 <ScalarProperty Name="AvailableQuantity" ColumnName="AvailableQuantity" />
-                <ScalarProperty Name="CostPerItem" ColumnName="CostPerItem" />
+                <ScalarProperty Name="ValueOfItem" ColumnName="ValueOfItem" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

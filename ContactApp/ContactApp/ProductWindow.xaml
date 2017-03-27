@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InventoryApp"
         mc:Ignorable="d"
-        Title="InventoryWindow" Width="300" Height="240"
-        FocusManager.FocusedElement="{Binding ElementName=uxName}">
+        Title="InventoryWindow" Width="300" Height="240">
 
     <Grid x:Name="uxGrid">
         <Grid.ColumnDefinitions>
@@ -23,14 +22,14 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right">Name:</TextBlock>
-        <TextBox x:Name="uxName" Grid.Column="1" Grid.Row="0"></TextBox>
+        <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right">Product Name:</TextBlock>
+        <TextBox x:Name="uxProductName" Grid.Column="1" Grid.Row="0" MaxLength="50"></TextBox>
 
-        <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right">Email:</TextBlock>
-        <TextBox x:Name="uxEmail" Grid.Column="1" Grid.Row="1"></TextBox>
+        <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right">Item Number:</TextBlock>
+        <TextBox x:Name="uxItemNumber" Grid.Column="1" Grid.Row="1" PreviewTextInput="uxItemNumber_PreviewTextInput"></TextBox>
 
-        <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right">Phone Number:</TextBlock>
-        <TextBox x:Name="uxPhoneNumber" Grid.Column="1" Grid.Row="2"></TextBox>
+        <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right">Price Per Item:</TextBlock>
+        <TextBox x:Name="uxPricePerItem" Grid.Column="1" Grid.Row="2" Text="{Binding Path=ProductModel.PricePerItem, StringFormat=C, Mode=OneWay}"></TextBox>
 
         <TextBlock Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right">Phone Type:</TextBlock>
         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="3">
@@ -41,12 +40,12 @@
         </StackPanel>
         <TextBlock Grid.Column="0" Grid.Row="4" HorizontalAlignment="Right">Age:</TextBlock>
         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="4">
-            <TextBlock Text="{Binding ElementName=uxAge, Path=Value}" Width="40"></TextBlock>
+            <TextBlock Text="" Width="40"></TextBlock>
             <Slider x:Name="uxAge" Maximum="100" Width="100" IsSnapToTickEnabled="true"></Slider>
         </StackPanel>
         
-        <TextBlock Grid.Column="0" Grid.Row="5" HorizontalAlignment="Right">Notes:</TextBlock>
-        <TextBox x:Name="uxNotes" Grid.Column="1" Grid.Row="5" AcceptsReturn="True" TextWrapping="Wrap" Height="60"></TextBox>
+        <TextBlock Grid.Column="0" Grid.Row="5" HorizontalAlignment="Right">Product Description:</TextBlock>
+        <TextBox x:Name="uxProductDescription" Grid.Column="1" Grid.Row="5" AcceptsReturn="True" TextWrapping="Wrap" Height="60"></TextBox>
 
         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Right">
             <Button x:Name="uxSubmit"  MinWidth="10" HorizontalAlignment="Center" Click="uxSubmit_Click" Margin="10">Add</Button>

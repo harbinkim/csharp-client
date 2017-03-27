@@ -1,0 +1,57 @@
+﻿<Window x:Class="InventoryApp.ProductWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InventoryApp"
+        mc:Ignorable="d"
+        Title="ProductWindow" Height="500" Width="300">
+    <Grid x:Name="uxGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right">Product Name:</TextBlock>
+        <TextBox x:Name="uxProductName" Grid.Column="1" Grid.Row="0" TextChanged="ux_TextChanged"></TextBox>
+
+        <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right">Product Number:</TextBlock>
+        <TextBox x:Name="uxProductNumber" Grid.Column="1" Grid.Row="1" TextChanged="ux_TextChanged" ></TextBox>
+
+        <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right">Price Per Item:</TextBlock>
+        <TextBox x:Name="uxPricePerItem" Grid.Column="1" Grid.Row="2" LostFocus="uxPricePerItem_LostFocus">$0.00</TextBox>
+
+        <TextBlock Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right">Available Quantity:</TextBlock>
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="3">
+            <TextBox x:Name="uxAvailableQuantity" TextChanged="uxAvailableQuantity_TextChanged" Width="100">0</TextBox>
+            <Button x:Name="uxUpButton" Content="^" Click="uxUpButton_Click"/>
+            <Button x:Name="uxDownButton" Content="˅" Click="uxDownButton_Click"/>
+        </StackPanel>
+
+        <TextBlock Grid.Column="0" Grid.Row="4" HorizontalAlignment="Right">Cost Per Item:</TextBlock>
+        <TextBox x:Name="uxCostPerItem" Grid.Column="1" Grid.Row="4" LostFocus="uxCostPerItem_LostFocus">$0.00</TextBox>
+
+        <TextBlock Grid.Column="0" Grid.Row="5" HorizontalAlignment="Right">Description:</TextBlock>
+        <TextBox x:Name="uxDescription" Grid.Column="1" Grid.Row="5" AcceptsReturn="True" TextWrapping="Wrap" Height="60"></TextBox>
+
+        <TextBlock Grid.Column="0" Grid.Row="6" HorizontalAlignment="Right">Errors:</TextBlock>
+        <TextBlock x:Name="uxError" Grid.Column="1" Grid.Row="6" TextWrapping="Wrap" Foreground="Red"></TextBlock>
+        
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Right">
+            <Button x:Name="uxSubmit"  MinWidth="10" HorizontalAlignment="Center" Click="uxSubmit_Click" Margin="10">Add</Button>
+            <Button x:Name="uxCancel"  MinWidth="10" HorizontalAlignment="Center" Click="uxCancel_Click" Margin="10">Cancel</Button>
+        </StackPanel>
+
+        
+    </Grid>
+</Window>

@@ -7,9 +7,10 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Product](
 	[ProductId] [int] IDENTITY(1,1) NOT NULL,
+	[ProductName] [nvarchar](50) NOT NULL,
 	[ProductNumber] [int] NOT NULL,
 	[ProductDescription] [nvarchar](50) NULL,
-	[PricePerItem] [float](50) NOT NULL,
+	[PricePerItem] [float] NOT NULL,
 	[AvailableQuantity] [int] NOT NULL,
 	[CostPerItem] [float] NOT NULL,
 	[ValueOfItem] [float] NOT NULL,

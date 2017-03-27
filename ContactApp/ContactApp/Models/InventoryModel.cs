@@ -5,6 +5,7 @@ namespace InventoryApp.Models
     public class ProductModel
     {
         public int Id { get; set; }
+        public string ProductName { get; set; }
         public int ItemNumber { get; set; }
         public string Description { get; set; }
         public double PricePerItem { get; set; }
@@ -17,6 +18,7 @@ namespace InventoryApp.Models
             var repositoryModel = new InventoryRepository.ProductModel
             {
                 Id = Id,
+                ProductName = ProductName,
                 ItemNumber = ItemNumber,
                 Description = Description,
                 PricePerItem = PricePerItem,
@@ -33,6 +35,7 @@ namespace InventoryApp.Models
             var InventoryModel = new ProductModel
             {
                 Id = respositoryModel.Id,
+                ProductName = respositoryModel.ProductName,
                 ItemNumber = respositoryModel.ItemNumber,
                 Description = respositoryModel.Description,
                 PricePerItem = respositoryModel.PricePerItem,

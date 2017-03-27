@@ -59,7 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\InventoryDB\InventoryDB.csproj">
-      <Project>{b68488d9-bca7-422b-baf2-015fdee8f1cc}</Project>
+      <Project>{238472e4-9b45-42d8-bb78-782f09d8d752}</Project>
       <Name>InventoryDB</Name>
     </ProjectReference>
   </ItemGroup>

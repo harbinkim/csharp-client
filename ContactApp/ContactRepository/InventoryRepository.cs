@@ -1,5 +1,7 @@
 ﻿using InventoryDB;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 
 namespace InventoryRepository
@@ -7,8 +9,9 @@ namespace InventoryRepository
     public class ProductModel
     {
         public int Id { get; set; }
-        public int ItemNumber { get; set; }
-        public string Description { get; set; }
+        public string ProductName { get; set; }
+        public int ProductNumber { get; set; }
+        public string ProductDescription { get; set; }
         public double PricePerItem { get; set; }
         public int AvailableQuantity { get; set; }
         public double CostPerItem { get; set; }
@@ -22,13 +25,22 @@ namespace InventoryRepository
             var ProductDb = ToDbModel(InventoryModel);
 
             DatabaseManager.Instance.Products.Add(ProductDb);
-            DatabaseManager.Instance.SaveChanges();
+            try
+            {
+                DatabaseManager.Instance.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+
+            }
+            
 
             InventoryModel = new ProductModel
             {
                 Id = ProductDb.ProductId,
-                ItemNumber = ProductDb.ProductNumber,
-                Description = ProductDb.ProductDescription,
+                ProductName = ProductDb.ProductName,
+                ProductNumber = ProductDb.ProductNumber,
+                ProductDescription = ProductDb.ProductDescription,
                 PricePerItem = ProductDb.PricePerItem,
                 AvailableQuantity = ProductDb.AvailableQuantity,
                 CostPerItem = ProductDb.CostPerItem,
@@ -44,8 +56,9 @@ namespace InventoryRepository
               .Select(t => new ProductModel
               {
                   Id = t.ProductId,
-                  ItemNumber = t.ProductNumber,
-                  Description = t.ProductDescription,
+                  ProductName = t.ProductName,
+                  ProductNumber = t.ProductNumber,
+                  ProductDescription = t.ProductDescription,
                   PricePerItem = t.PricePerItem,
                   AvailableQuantity = t.AvailableQuantity,
                   CostPerItem = t.CostPerItem,
@@ -88,8 +101,9 @@ namespace InventoryRepository
             var InventoryDb = new Product
             {
                 ProductId = ProductModel.Id,
-                ProductNumber = ProductModel.ItemNumber,
-                ProductDescription = ProductModel.Description,
+                ProductName = ProductModel.ProductName,
+                ProductNumber = ProductModel.ProductNumber,
+                ProductDescription = ProductModel.ProductDescription,
                 PricePerItem = ProductModel.PricePerItem,
                 AvailableQuantity = ProductModel.AvailableQuantity,
                 CostPerItem = ProductModel.CostPerItem,

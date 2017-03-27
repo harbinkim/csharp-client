@@ -1,5 +1,6 @@
 ﻿using InventoryApp.Models;
 using System;
+using System.Text.RegularExpressions;
 using System.Windows;
 
 namespace InventoryApp
@@ -23,24 +24,19 @@ namespace InventoryApp
         {
             Product = new ProductModel();
 
-            Product.ItemNumber = uxName.Text;
-            Product.Email = uxEmail.Text;
-            
-            if (uxHome.IsChecked.Value)
-            {
-                Product.PhoneType = "Home";
-            }
-            else
-            {
-                Product.PhoneType = "Mobile";
-            }
+            Product.ProductName = uxProductName.Text;
 
-            Product.PhoneNumber = uxPhoneNumber.Text;
+            int intTemp;
+            Int32.TryParse(uxItemNumber.Text, out intTemp);
+            Product.ItemNumber = intTemp;
 
-            // Add an age that matches to where the slider is at
-            Product.Age = (int)uxAge.Value;
-            Product.Notes = uxNotes.Text;
-            Product.CreatedDate = DateTime.Now;
+            double doubleTemp;
+            Double.TryParse(uxPricePerItem.Text,out doubleTemp);
+            Product.PricePerItem = doubleTemp;
+            //// Add an age that matches to where the slider is at
+            //Product.Age = (int)uxAge.Value;
+            //Product.Notes = uxNotes.Text;
+            //Product.CreatedDate = DateTime.Now;
 
             DialogResult = true;
             Close();
@@ -50,6 +46,13 @@ namespace InventoryApp
         {
             DialogResult = false;
             Close();
+        }
+
+        Regex numericRegex = new Regex("[^0-9.-]+");
+        private void uxItemNumber_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            //Only allows numeric input into uxItemNumber
+            e.Handled = !numericRegex.IsMatch(e.Text);           
         }
     }
 }

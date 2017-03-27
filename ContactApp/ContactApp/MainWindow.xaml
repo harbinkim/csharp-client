@@ -26,19 +26,19 @@
             <ListView.View>
                 <GridView>
                     <!--add the GridViewColumnHeader with a Tag to sortby and method GridViewColumnHeader_Click gets called-->
-                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Width="100">
+                    <GridViewColumn  Width="100">
                        <GridViewColumnHeader Content="Name" Tag="Name" Click="GridViewColumnHeader_Click"/>
                     </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Email}" Width="100">
+                    <GridViewColumn  Width="100">
                         <GridViewColumnHeader Content="Email" Tag="Email" Click="GridViewColumnHeader_Click"/>
                     </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding PhoneType}" Width="100">
+                    <GridViewColumn  Width="100">
                         <GridViewColumnHeader Content="Phone Type" Tag="PhoneType" Click="GridViewColumnHeader_Click"/>
                     </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding PhoneNumber}" Width="100">
+                    <GridViewColumn  Width="100">
                         <GridViewColumnHeader Content="Phone Number" Tag="PhoneNumber" Click="GridViewColumnHeader_Click"/>
                     </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Age}" Width="100">
+                    <GridViewColumn  Width="100">
                         <GridViewColumnHeader Content="Age" Tag="Age" Click="GridViewColumnHeader_Click"/>
                     </GridViewColumn>
                 </GridView>
