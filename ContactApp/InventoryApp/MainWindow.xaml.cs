@@ -62,33 +62,53 @@ namespace InventoryApp
         private CollectionView view;
         private void ListView_OnColumnClick(object s, RoutedEventArgs e)
         {
-
+            var previousSortDescription = view.SortDescriptions.Any() ? view.SortDescriptions.First():new SortDescription();
             view.SortDescriptions.Clear();
+
+            var newSortDescription = new SortDescription();
 
             if (e.OriginalSource == productNameCol)
             {
-                view.SortDescriptions.Add(new SortDescription("ProductName", ListSortDirection.Ascending));
+                newSortDescription.PropertyName = "ProductName";                
             }
             else if (e.OriginalSource == productNumberCol)
             {
-                view.SortDescriptions.Add(new SortDescription("ProductNumber", ListSortDirection.Ascending));
+                newSortDescription.PropertyName = "ProductNumber";
             }
             else if (e.OriginalSource == pricePerItemCol)
             {
-                view.SortDescriptions.Add(new SortDescription("PricePerItem", ListSortDirection.Ascending));
+                newSortDescription.PropertyName = "PricePerItem";
             }
             else if (e.OriginalSource == costPerItemCol)
             {
-                view.SortDescriptions.Add(new SortDescription("CostPerItem", ListSortDirection.Ascending));
+                newSortDescription.PropertyName = "CostPerItem";
             }
             else if (e.OriginalSource == availableQuantityCol)
             {
-                view.SortDescriptions.Add(new SortDescription("AvailableQuantity", ListSortDirection.Ascending));
+                newSortDescription.PropertyName = "AvailableQuantity";
             }
-            else if (e.OriginalSource == productNumberCol)
+
+
+            if (previousSortDescription.PropertyName == newSortDescription.PropertyName)
             {
-                view.SortDescriptions.Add(new SortDescription("Password", ListSortDirection.Ascending));
+                if (previousSortDescription.Direction.Equals(ListSortDirection.Ascending))
+                {
+                    newSortDescription.Direction = ListSortDirection.Descending;
+                }
+                else
+                {
+                    newSortDescription.Direction = ListSortDirection.Ascending;
+                }
             }
+
+            view.SortDescriptions.Add(newSortDescription);
+
+        }
+
+        private ProductModel selectedProduct;
+        private void uxProductList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectedProduct = (ProductModel)uxProductList.SelectedValue;
         }
     }
 }

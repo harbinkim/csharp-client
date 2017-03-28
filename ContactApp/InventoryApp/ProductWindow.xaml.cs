@@ -151,11 +151,13 @@ namespace InventoryApp
             {
                 isValid = false;
                 AddError(nameof(Product.ProductNumber), EMPTY_PRODUCTNUMBER_ERROR);
+                RemoveError(nameof(Product.ProductNumber), NONNUMERIC_PRODUCTNUMBER_ERROR);
             }
             else if(!int.TryParse(uxProductNumber.Text,out tempInt))
             {
                 isValid = false;
                 AddError(nameof(Product.ProductNumber), NONNUMERIC_PRODUCTNUMBER_ERROR);
+                RemoveError(nameof(Product.ProductNumber), EMPTY_PRODUCTNUMBER_ERROR);
             }
             else
             {
