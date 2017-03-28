@@ -25,16 +25,8 @@ namespace InventoryRepository
             var ProductDb = ToDbModel(InventoryModel);
 
             DatabaseManager.Instance.Products.Add(ProductDb);
-            try
-            {
-                DatabaseManager.Instance.SaveChanges();
-            }
-            catch (DbEntityValidationException ex)
-            {
 
-            }
-            
-
+            DatabaseManager.Instance.SaveChanges();
             InventoryModel = new ProductModel
             {
                 Id = ProductDb.ProductId,

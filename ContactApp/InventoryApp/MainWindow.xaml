@@ -13,5 +13,18 @@
                 <MenuItem x:Name="uxFileRemove" Header="_Remove" Click="uxFileRemove_Click" />
             </MenuItem>
         </Menu>
+        <ListView x:Name="uxProductList" Height="200" >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Width="100" >
+                        <GridViewColumnHeader x:Name="productNameCol">Product Name</GridViewColumnHeader>
+                    </GridViewColumn>
+                    <GridViewColumn x:Name="productNumberCol" DisplayMemberBinding="{Binding ProductNumber}" Header="Product Number" Width="100" />
+                    <GridViewColumn x:Name="pricePerItemCol" DisplayMemberBinding="{Binding PricePerItem}" Header="Price Per Item" Width="100" />
+                    <GridViewColumn x:Name="availableQuantityCol" DisplayMemberBinding="{Binding AvailableQuantity}" Header="Available Quantity" Width="100" />
+                    <GridViewColumn x:Name="costPerItemCol" DisplayMemberBinding="{Binding CostPerItem }" Header="Cost Per Item" Width="100" />
+                </GridView>
+            </ListView.View>
+        </ListView>
     </StackPanel>
 </Window>

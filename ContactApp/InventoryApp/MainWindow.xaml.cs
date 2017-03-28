@@ -1,5 +1,7 @@
-﻿using System;
+﻿using InventoryApp.Model;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +25,17 @@ namespace InventoryApp
         public MainWindow()
         {
             InitializeComponent();
+
+            LoadProducts();
+            AddHandler(GridViewColumnHeader.ClickEvent, new RoutedEventHandler(ListView_OnColumnClick));
+            view = (CollectionView)CollectionViewSource.GetDefaultView(uxProductList.ItemsSource);
+        }
+
+
+        private void LoadProducts()
+        {
+            var products = App.InventoryRepository.GetAll();
+            uxProductList.ItemsSource = products.Select(p => ProductModel.ToModel(p)).ToList();
         }
 
         private void uxFileNew_Click(object sender, RoutedEventArgs e)
@@ -35,6 +48,8 @@ namespace InventoryApp
                 var repositoryProductModel = uiProductModel.ToRepositoryModel();
 
                 App.InventoryRepository.Add(repositoryProductModel);
+
+                LoadProducts();
             }
 
         }
@@ -42,6 +57,38 @@ namespace InventoryApp
         private void uxFileRemove_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private CollectionView view;
+        private void ListView_OnColumnClick(object s, RoutedEventArgs e)
+        {
+
+            view.SortDescriptions.Clear();
+
+            if (e.OriginalSource == productNameCol)
+            {
+                view.SortDescriptions.Add(new SortDescription("ProductName", ListSortDirection.Ascending));
+            }
+            else if (e.OriginalSource == productNumberCol)
+            {
+                view.SortDescriptions.Add(new SortDescription("ProductNumber", ListSortDirection.Ascending));
+            }
+            else if (e.OriginalSource == pricePerItemCol)
+            {
+                view.SortDescriptions.Add(new SortDescription("PricePerItem", ListSortDirection.Ascending));
+            }
+            else if (e.OriginalSource == costPerItemCol)
+            {
+                view.SortDescriptions.Add(new SortDescription("CostPerItem", ListSortDirection.Ascending));
+            }
+            else if (e.OriginalSource == availableQuantityCol)
+            {
+                view.SortDescriptions.Add(new SortDescription("AvailableQuantity", ListSortDirection.Ascending));
+            }
+            else if (e.OriginalSource == productNumberCol)
+            {
+                view.SortDescriptions.Add(new SortDescription("Password", ListSortDirection.Ascending));
+            }
         }
     }
 }
