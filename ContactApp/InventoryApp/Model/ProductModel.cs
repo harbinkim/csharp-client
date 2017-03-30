@@ -50,6 +50,12 @@ namespace InventoryApp.Model
             };
 
             return productModel;
-        }        
+        } 
+        
+        public ProductModel ShallowCopy()
+        {
+            return (ProductModel)this.MemberwiseClone();
+        }
+                   
     }
 }

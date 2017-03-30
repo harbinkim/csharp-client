@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-
+using System.Windows.Media;
 
 namespace InventoryApp
 {
@@ -41,21 +41,21 @@ namespace InventoryApp
 
         private void uxPricePerItem_LostFocus(object sender, RoutedEventArgs e)
         {
-            double amount = 0.0d;
-            if (Double.TryParse(uxPricePerItem.Text, NumberStyles.Currency, null, out amount))
-            {
-                uxPricePerItem.Text = amount.ToString("C");
-            }
+            //double amount = 0.0d;
+            //if (Double.TryParse(uxPricePerItem.Text, NumberStyles.Currency, null, out amount))
+            //{
+            //    uxPricePerItem.Text = amount.ToString("C");
+            //}
             IsValidProduct();
         }
 
         private void uxCostPerItem_LostFocus(object sender, RoutedEventArgs e)
         {
-            double amount = 0.0d;
-            if (Double.TryParse(uxCostPerItem.Text, NumberStyles.Currency, null, out amount))
-            {
-                uxCostPerItem.Text = amount.ToString("C");
-            }
+            //double amount = 0.0d;
+            //if (Double.TryParse(uxCostPerItem.Text, NumberStyles.Currency, null, out amount))
+            //{
+            //    uxCostPerItem.Text = amount.ToString("C");
+            //}
             IsValidProduct();
         }
 
@@ -82,7 +82,10 @@ namespace InventoryApp
 
         private void uxSubmit_Click(object sender, RoutedEventArgs e)
         {
-            Product = new ProductModel();
+            if (Product == null)
+            {
+                Product = new ProductModel();
+            }
 
             Product.ProductName = uxProductName.Text;
 
@@ -124,6 +127,7 @@ namespace InventoryApp
         private const string EMPTYNAME_ERROR = "Product name cannot be empty.";
         private const string EMPTY_PRODUCTNUMBER_ERROR = "Product number cannot be empty.";
         private const string NONNUMERIC_PRODUCTNUMBER_ERROR = "Product number can only contain numbers.";
+        private const string ZERO_PRODUCTNUMBER_ERROR = "Product number cannot be zero.";
         private const string NONNUMERIC_PRICEPERITEM_ERROR = "Price cannot contain characters.";
         private const string NEGATIVE_PRICEPERITEM_ERROR = "Price cannot be negative.";
         private const string NEGATIVE_AVAILABLEQUANTITY_ERROR = "Available quantity cannot be negative.";
@@ -139,10 +143,12 @@ namespace InventoryApp
             {
                 isValid = false;
                 AddError(nameof(Product.ProductName),EMPTYNAME_ERROR);
+                uxProductName.BorderBrush = Brushes.Red;
             }
             else
             {
                 RemoveError(nameof(Product.ProductName), EMPTYNAME_ERROR);
+                uxProductName.BorderBrush = Brushes.Black;
             }
 
             int tempInt;
@@ -151,60 +157,82 @@ namespace InventoryApp
             {
                 isValid = false;
                 AddError(nameof(Product.ProductNumber), EMPTY_PRODUCTNUMBER_ERROR);
+                RemoveError(nameof(Product.ProductNumber), ZERO_PRODUCTNUMBER_ERROR);
                 RemoveError(nameof(Product.ProductNumber), NONNUMERIC_PRODUCTNUMBER_ERROR);
+                uxProductNumber.BorderBrush = Brushes.Red;
             }
             else if(!int.TryParse(uxProductNumber.Text,out tempInt))
             {
                 isValid = false;
                 AddError(nameof(Product.ProductNumber), NONNUMERIC_PRODUCTNUMBER_ERROR);
+                RemoveError(nameof(Product.ProductNumber), ZERO_PRODUCTNUMBER_ERROR);
                 RemoveError(nameof(Product.ProductNumber), EMPTY_PRODUCTNUMBER_ERROR);
+                uxProductNumber.BorderBrush = Brushes.Red;
+            }
+            else if(tempInt ==0)
+            {
+                isValid = false;
+                AddError(nameof(Product.ProductNumber), ZERO_PRODUCTNUMBER_ERROR);
+                RemoveError(nameof(Product.ProductNumber), EMPTY_PRODUCTNUMBER_ERROR);
+                RemoveError(nameof(Product.ProductNumber), NONNUMERIC_PRODUCTNUMBER_ERROR);
+                uxProductNumber.BorderBrush = Brushes.Red;
             }
             else
             {
                 RemoveError(nameof(Product.ProductNumber), NONNUMERIC_PRODUCTNUMBER_ERROR);
                 RemoveError(nameof(Product.ProductNumber), EMPTY_PRODUCTNUMBER_ERROR);
+                RemoveError(nameof(Product.ProductNumber), ZERO_PRODUCTNUMBER_ERROR);
+                uxProductNumber.BorderBrush = Brushes.Black;
             }
 
             double tempDbl = 0;
 
-            if (!Double.TryParse(uxPricePerItem.Text,NumberStyles.AllowCurrencySymbol|NumberStyles.AllowDecimalPoint|NumberStyles.AllowThousands, CultureInfo.GetCultureInfo("en-US"),out tempDbl))
+            if (!Double.TryParse(uxPricePerItem.Text,NumberStyles.AllowCurrencySymbol|NumberStyles.AllowDecimalPoint|NumberStyles.AllowThousands, CultureInfo.GetCultureInfo("en-US"),out tempDbl)&& !String.IsNullOrWhiteSpace(uxPricePerItem.Text))
             {
                 isValid = false;
                 AddError(nameof(Product.PricePerItem), NONNUMERIC_PRICEPERITEM_ERROR);
+                uxPricePerItem.BorderBrush = Brushes.Red;
             }
             else
             {
                 RemoveError(nameof(Product.PricePerItem), NONNUMERIC_PRICEPERITEM_ERROR);
+                uxPricePerItem.BorderBrush = Brushes.Black;
             }
 
             if (tempDbl < 0)
             {
                 isValid = false;
                 AddError(nameof(Product.PricePerItem), NEGATIVE_PRICEPERITEM_ERROR);
+                uxPricePerItem.BorderBrush = Brushes.Red;
             }
             else
             {
                 RemoveError(nameof(Product.PricePerItem), NEGATIVE_PRICEPERITEM_ERROR);
+                uxPricePerItem.BorderBrush = Brushes.Black;
             }
 
-            if (!Double.TryParse(uxCostPerItem.Text, NumberStyles.AllowCurrencySymbol | NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands, CultureInfo.GetCultureInfo("en-US"), out tempDbl))
+            if (!Double.TryParse(uxCostPerItem.Text, NumberStyles.AllowCurrencySymbol | NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands, CultureInfo.GetCultureInfo("en-US"), out tempDbl) && !String.IsNullOrWhiteSpace(uxCostPerItem.Text))
             {
                 isValid = false;
                 AddError(nameof(Product.CostPerItem), NONNUMERIC_PRICEPERITEM_ERROR);
+                uxCostPerItem.BorderBrush = Brushes.Red;
             }
             else
             {
                 RemoveError(nameof(Product.CostPerItem), NONNUMERIC_PRICEPERITEM_ERROR);
+                uxCostPerItem.BorderBrush = Brushes.Black;
             }
 
             if (tempDbl < 0)
             {
                 isValid = false;
                 AddError(nameof(Product.CostPerItem), NEGATIVE_PRICEPERITEM_ERROR);
+                uxCostPerItem.BorderBrush = Brushes.Red;
             }
             else
             {
                 RemoveError(nameof(Product.CostPerItem), NEGATIVE_PRICEPERITEM_ERROR);
+                uxCostPerItem.BorderBrush = Brushes.Black;
             }
 
 
@@ -212,10 +240,12 @@ namespace InventoryApp
             {
                 isValid = false;
                 AddError(nameof(Product.AvailableQuantity), NEGATIVE_AVAILABLEQUANTITY_ERROR);
+                uxAvailableQuantity.BorderBrush = Brushes.Red;
             }
             else
             {
                 RemoveError(nameof(Product.AvailableQuantity), NEGATIVE_AVAILABLEQUANTITY_ERROR);
+                uxAvailableQuantity.BorderBrush = Brushes.Black;
             }
 
             if (!(uxSubmit == null))
@@ -291,6 +321,26 @@ namespace InventoryApp
             get { return errors.Count > 0; }
         }
 
-        
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            
+            if (Product != null)
+            {
+                uxSubmit.Content = "Update";
+                var placeholderProduct = Product.ShallowCopy();
+                uxGrid.DataContext = placeholderProduct;
+            }
+            else
+            {
+                Product = new ProductModel();
+                uxGrid.DataContext = Product;
+            }
+            
+
+            if (Product.ProductNumber ==0)
+            {
+                uxProductNumber.Text = "";
+            }
+        }
     }
 }

@@ -28,7 +28,7 @@ namespace InventoryApp
 
             LoadProducts();
             AddHandler(GridViewColumnHeader.ClickEvent, new RoutedEventHandler(ListView_OnColumnClick));
-            view = (CollectionView)CollectionViewSource.GetDefaultView(uxProductList.ItemsSource);
+            
         }
 
 
@@ -36,6 +36,7 @@ namespace InventoryApp
         {
             var products = App.InventoryRepository.GetAll();
             uxProductList.ItemsSource = products.Select(p => ProductModel.ToModel(p)).ToList();
+            view = (CollectionView)CollectionViewSource.GetDefaultView(uxProductList.ItemsSource);
         }
 
         private void uxFileNew_Click(object sender, RoutedEventArgs e)
@@ -56,7 +57,10 @@ namespace InventoryApp
 
         private void uxFileRemove_Click(object sender, RoutedEventArgs e)
         {
+            App.InventoryRepository.Remove(selectedProduct.Id);
+            selectedProduct = null;
 
+            LoadProducts();
         }
 
         private CollectionView view;
@@ -87,7 +91,10 @@ namespace InventoryApp
             {
                 newSortDescription.PropertyName = "AvailableQuantity";
             }
-
+            else if (e.OriginalSource == valueOfItemCol)
+            {
+                newSortDescription.PropertyName = "ValueOfItem";
+            }
 
             if (previousSortDescription.PropertyName == newSortDescription.PropertyName)
             {
@@ -109,6 +116,33 @@ namespace InventoryApp
         private void uxProductList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedProduct = (ProductModel)uxProductList.SelectedValue;
+        }
+
+        private void uxFileRemove_Loaded(object sender, RoutedEventArgs e)
+        {
+            uxFileRemove.IsEnabled = (selectedProduct != null);
+        }
+
+        private void uxFileChange_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new ProductWindow();
+            window.Product = selectedProduct;
+
+            if (window.ShowDialog() == true)
+            {
+                App.InventoryRepository.Update(window.Product.ToRepositoryModel());
+                LoadProducts();
+            }
+        }
+
+        private void uxFileChange_Loaded(object sender, RoutedEventArgs e)
+        {
+            uxFileChange.IsEnabled = (selectedProduct != null);
+        }
+
+        private void uxFileExit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

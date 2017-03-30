@@ -5,12 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InventoryApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Inventory" Height="350" Width="700">
+    <Window.Resources>
+        <local:PriceConverter x:Key="PriceConverter" />
+    </Window.Resources>
     <StackPanel Orientation="Vertical">
         <Menu>
             <MenuItem Header="_File">
                 <MenuItem x:Name="uxFileNew" Header="_New" Click="uxFileNew_Click" />
-                <MenuItem x:Name="uxFileRemove" Header="_Remove" Click="uxFileRemove_Click" />
+                <MenuItem x:Name="uxFileRemove" Header="_Remove" Click="uxFileRemove_Click" Loaded="uxFileRemove_Loaded"/>
+                <MenuItem x:Name="uxFileChange" Header="_Modify" Click="uxFileChange_Click" Loaded="uxFileChange_Loaded" />
+                <MenuItem x:Name="uxFileExit" Header="_Exit" Click="uxFileExit_Click" />
             </MenuItem>
         </Menu>
         <ListView x:Name="uxProductList" Height="200" SelectionChanged="uxProductList_SelectionChanged">
@@ -22,14 +27,17 @@
                     <GridViewColumn DisplayMemberBinding="{Binding ProductNumber}" Width="100" >
                         <GridViewColumnHeader x:Name="productNumberCol">Product Number</GridViewColumnHeader>
                     </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding PricePerItem}" Width="100" >
+                    <GridViewColumn DisplayMemberBinding="{Binding PricePerItem, Converter={StaticResource PriceConverter}}" Width="100" >
                         <GridViewColumnHeader x:Name="pricePerItemCol">Price Per Item</GridViewColumnHeader>
                     </GridViewColumn>
                     <GridViewColumn  DisplayMemberBinding="{Binding AvailableQuantity}" Width="100" >
                         <GridViewColumnHeader x:Name="availableQuantityCol">Available Quantity</GridViewColumnHeader>
                     </GridViewColumn>
-                    <GridViewColumn  DisplayMemberBinding="{Binding CostPerItem }"  Width="100" >
+                    <GridViewColumn  DisplayMemberBinding="{Binding CostPerItem, Converter={StaticResource PriceConverter}}"  Width="100" >
                         <GridViewColumnHeader x:Name="costPerItemCol">Cost Per Item</GridViewColumnHeader>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding ValueOfItem, Converter={StaticResource PriceConverter}}"  Width="100" >
+                        <GridViewColumnHeader x:Name="valueOfItemCol">Value of Item</GridViewColumnHeader>
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
